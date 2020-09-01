@@ -17,6 +17,12 @@ public class ArrayList implements CP2List
     }
     
     //methods
+    
+    /** 
+     * A function to add a value to the end of an array.
+     * 
+     * @param value the value to be added
+     */
     public void add(int value)
     {
         if(size==list.length)upsize();
