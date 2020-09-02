@@ -55,6 +55,11 @@ public class ArrayList implements CP2List
 		list=newArray;
     }
     
+    /**
+     * A function that doubles the size of an array.
+     * 
+     * 
+     */
     private void upsize()
     {
         int[] newList=new int[list.length*2];
@@ -95,16 +100,33 @@ public class ArrayList implements CP2List
 	public void addAll(CP2List list){throw new UnsupportedOperationException();}
 	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
 	
+	
+	/**
+	 * Clears a given array by setting size to zero.
+	 * 
+	 */
     public void clear()
     {
         size=0;
     }
     
     
+    /**
+     * Determines if an array contains a value.
+     * 
+     * @param value The value that is searched for in the array.
+     * @return If the value is found in the array.
+     */
 	public boolean contains(int value){
 		return indexOf(value)!=-1;
 	}
 	
+	/**
+	 * Determines if an array contains all the values in another array.
+	 * 
+	 * @param list The list of values that are being looked for in the array.
+	 * @return If the list of values are found in the array.
+	 */
 	public boolean containsAll(CP2List list){
 		for(int i=0;i<list.size();i++) {
 			int v=list.get(i);
@@ -131,6 +153,11 @@ public class ArrayList implements CP2List
 		return -1;
 	}
 	
+	/**
+	 * Determines if a list is empty.
+	 * 
+	 * @return If the list is empty.
+	 */
 	public boolean isEmpty(){
 		if(size==0) {
 			return true;
@@ -160,15 +187,26 @@ public class ArrayList implements CP2List
 	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	
     
+    /**
+     * Reports the size of the list.
+     * 
+     * @return the size of the list.
+     */
     public int size()
     {
         return size;
     }
     
-    
+    /**
+     * Sets the current place at the index in the given list to the new value.
+     * 
+     * @return The 
+     * 
+     */
 	public int set(int index, int value){
+		int old=list[index];
 		list[index]=value;
-		return value;
+		return old;
 	}
 	
 	public CP2List subList(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
