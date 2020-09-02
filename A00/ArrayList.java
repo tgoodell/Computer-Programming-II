@@ -168,16 +168,29 @@ public class ArrayList implements CP2List
 	}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	
+	
+	/**
+	 * Deletes the value at the given index.
+	 * 
+	 * @param Index The index that will be deleted.
+	 * @return The deleted value.
+	 */
 	public int delete(int index){
-		// start at deleted index, move value from left to right, rinse and repeat. At end, do size--.
-		// loop from index to end
-		// {
-		// shift the value from the right onto the current index
-		// }
-		// size--
-		return 7;
+		for (int i=index;i<size-1;i++) {
+			list[i]=list[i+1];
+		}
+		size--;
+		
+		int deletedValue=list[index];
+		return deletedValue;
 	}
 	
+	/**
+	 * Removes the first occurance of a given value
+	 * 
+	 * @param value The value that will be removed.
+	 * @return If the value can be removed. 
+	 */
 	public boolean remove(int value){
 		int index=indexOf(value);
 		if(index>=0)delete(index);
@@ -198,10 +211,11 @@ public class ArrayList implements CP2List
     }
     
     /**
-     * Sets the current place at the index in the given list to the new value.
+     * Replaces the old value at the index in the given list to the new value.
      * 
-     * @return The 
-     * 
+     * @param index The index of where the new value should be inserted.
+     * @param value The new value that will be inserted at the given index.
+     * @return The old value at the given index. 
      */
 	public int set(int index, int value){
 		int old=list[index];

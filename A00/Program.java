@@ -34,8 +34,11 @@ public class Program
         System.out.println(list3.isEmpty());
         
         ArrayList list2=new ArrayList();
-        for(int i=3;i<9;i+=2) list2.add(i);
-//System.out.println(list1.containsAll(list2));
+        for(int i=3;i<30;i+=2) list2.add(i);
+        System.out.println(list2);
+        list2.delete(7);
+        System.out.println(list2);
+		//System.out.println(list1.containsAll(list2));
         
         
     }
