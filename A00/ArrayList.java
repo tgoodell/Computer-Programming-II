@@ -35,9 +35,11 @@ public class ArrayList implements CP2List
      * 
      * @param index the index used for insertion
      * @param value the value to be inserted
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size)
      */
     public void add(int index, int value)
     {
+		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
 		int i;
 		if (list.length==size-1) upsize();
 		list[index]=value;
@@ -105,7 +107,8 @@ public class ArrayList implements CP2List
      * @param value The value that is searched for in the array.
      * @return If the value is found in the array.
      */
-	public boolean contains(int value){
+	public boolean contains(int value)
+	{
 		return indexOf(value)!=-1;
 	}
 	
@@ -115,7 +118,8 @@ public class ArrayList implements CP2List
 	 * @param list The list of values that are being looked for in the array.
 	 * @return If the list of values are found in the array.
 	 */
-	public boolean containsAll(CP2List list){
+	public boolean containsAll(CP2List list)
+	{
 		for(int i=0;i<list.size();i++) {
 			int v=list.get(i);
 			if(!this.contains(v))return false;
@@ -130,7 +134,6 @@ public class ArrayList implements CP2List
 	 * @return The index of the first occurance. Returns -1 if nothing is found.
 	 */
 	public int indexOf(int value){
-		//size!=list.length
 		for(int i=0;i<size();i++) {
 			if(list[i]==value)return i;
 		}
@@ -142,11 +145,14 @@ public class ArrayList implements CP2List
 	 * 
 	 * @return If the list is empty.
 	 */
-	public boolean isEmpty(){
-		if(size==0) {
+	public boolean isEmpty()
+	{
+		if(size==0) 
+		{
 			return true;
 		}
-		else {
+		else 
+		{
 			return false;
 		}
 	}
@@ -157,11 +163,16 @@ public class ArrayList implements CP2List
 	 * 
 	 * @param Index The index that will be deleted.
 	 * @return The deleted value.
+	 * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size) 
 	 */
-	public int delete(int index){
-		for (int i=index;i<size-1;i++) {
+	public int delete(int index)
+	{
+		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
+		for (int i=index;i<size-1;i++) 
+		{
 			list[i]=list[i+1];
 		}
+		
 		size--;
 		
 		int deletedValue=list[index];
@@ -172,10 +183,13 @@ public class ArrayList implements CP2List
 	 * Removes the first occurance of a given value
 	 * 
 	 * @param value The value that will be removed.
-	 * @return If the value can be removed. 
+	 * @return If the value can be removed.
+	 * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size) 
 	 */
-	public boolean remove(int value){
+	public boolean remove(int value)
+	{
 		int index=indexOf(value);
+		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
 		if(index>=0)delete(index);
 		return true;
 	}
@@ -197,8 +211,11 @@ public class ArrayList implements CP2List
      * @param index The index of where the new value should be inserted.
      * @param value The new value that will be inserted at the given index.
      * @return The old value at the given index. 
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size) 
      */
-	public int set(int index, int value){
+	public int set(int index, int value)
+	{
+		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
 		int old=list[index];
 		list[index]=value;
 		return old;
