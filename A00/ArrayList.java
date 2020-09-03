@@ -65,6 +65,20 @@ public class ArrayList implements CP2List
 			add(v);
 		}
 	}
+	
+	/**
+	 * A function that determines if two CP2Lists are equal. 
+	 * 
+	 * @param list The list that the CP2List is being compared to.
+	 * @return if the lists are equal.
+	 */
+	public boolean equals(CP2List list){
+		if(list.size()!=size)return false;
+		for (int i=0;i<size;i++) {
+			if(this.list[i]!=list.get(i))return false;
+		}
+		return true;
+	}
     
     /**
      * A function that doubles the size of an array.
@@ -238,7 +252,6 @@ public class ArrayList implements CP2List
 	
 	// Unsupported Operations
 	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
-	public boolean equals(CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	public CP2List subList(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}

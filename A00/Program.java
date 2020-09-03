@@ -15,11 +15,12 @@ public class Program
 		
 		System.out.println("---");
 		ArrayList list=new ArrayList();
-		list.add(1);
-		list.add(2);
+		for(int i=3;i<30;i+=2) list.add(i);
 		list.add(3);
-		coolList.addAll(list);
-        System.out.println(coolList);
+		ArrayList tlist=new ArrayList();
+		for(int i=3;i<30;i+=2) tlist.add(i);
+		
+		System.out.println(list.equals(tlist));
         
     }
     

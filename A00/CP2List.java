@@ -3,7 +3,7 @@ public interface CP2List //DO NOT CHANGE THIS FILE!!!!
 	public void add(int value);//Check
 	public void add(int index,int value);//Check
 	public void addAll(CP2List list);//*
-	public void addAll(int index,CP2List list);//*
+	public void addAll(int index,CP2List list);//* Check
 	public void clear();//Check
 	public boolean contains(int value);//Check
 	public boolean containsAll(CP2List list);//*Check
