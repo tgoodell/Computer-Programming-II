@@ -1,7 +1,9 @@
 import java.util.*;
 
 /**
- * An arraylist
+ * An arraylist.
+ * 
+ * @author Tristan Goodell
  */
 public class ArrayList implements CP2List
 {
@@ -66,6 +68,8 @@ public class ArrayList implements CP2List
 	public void addAll(int index,CP2List list)
 	{
 		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
+		int i;
+		if (list.length==size-1) upsize();
 	}
     
     /**
