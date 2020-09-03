@@ -64,13 +64,6 @@ public class ArrayList implements CP2List
 			add(v);
 		}
 	}
-	
-	public void addAll(int index,CP2List list)
-	{
-		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
-		int i;
-		if (list.length==size-1) upsize();
-	}
     
     /**
      * A function that doubles the size of an array.
@@ -243,6 +236,7 @@ public class ArrayList implements CP2List
 	}
 	
 	// Unsupported Operations
+	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
 	public boolean equals(CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
