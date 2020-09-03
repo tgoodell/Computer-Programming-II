@@ -94,11 +94,6 @@ public class ArrayList implements CP2List
             return output;
         }
     }
-    
-
-
-	public void addAll(CP2List list){throw new UnsupportedOperationException();}
-	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
 	
 	
 	/**
@@ -166,7 +161,6 @@ public class ArrayList implements CP2List
 			return false;
 		}
 	}
-	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	
 	
 	/**
@@ -197,8 +191,6 @@ public class ArrayList implements CP2List
 		return true;
 	}
 	
-	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
-	
     
     /**
      * Reports the size of the list.
@@ -223,6 +215,10 @@ public class ArrayList implements CP2List
 		return old;
 	}
 	
+	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
+	public void addAll(CP2List list){throw new UnsupportedOperationException();}
+	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
+	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	public CP2List subList(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	public int[] toArray(){throw new  UnsupportedOperationException();}
 }
