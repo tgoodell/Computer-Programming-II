@@ -39,20 +39,13 @@ public class ArrayList implements CP2List
     public void add(int index, int value)
     {
 		int i;
-		int l=size+1;
-        int[] newArray = new int[l];
-        System.out.println(l);
-        for (i=0;i<index;i++) {
-			newArray[i]=list[i];
-		}
-		System.out.println("Size= " + l);
-		newArray[index]=value;
-		int j=i;
-		for (int k=i;k<l;k++) {
-			newArray[k]=list[j];
+		if (list.length==size-1) upsize();
+		list[index]=value;
+		int j=index+1;
+		for (int k=j;k<size;k++) {
+			list[k]=list[j];
 			j++;
 		}
-		list=newArray;
     }
     
     /**
@@ -128,10 +121,6 @@ public class ArrayList implements CP2List
 			if(!this.contains(v))return false;
 		}
 		return true;
-	}
-	
-	public boolean equals(CP2List list){
-		throw new  UnsupportedOperationException();
 	}
 	
 	/**
@@ -215,6 +204,7 @@ public class ArrayList implements CP2List
 		return old;
 	}
 	
+	public boolean equals(CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	public void addAll(CP2List list){throw new UnsupportedOperationException();}
 	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
