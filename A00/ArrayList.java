@@ -51,8 +51,25 @@ public class ArrayList implements CP2List
     }
     
     /**
-     * A function that doubles the size of an array.
+     * A function that adds all the values in a CP2List to the end of another CP2List.
      * 
+     * @param list The list of values to be added at the end.
+     */
+    public void addAll(CP2List list)
+    {
+		for(int i=0;i<list.size();i++) {
+			int v=list.get(i);
+			add(v);
+		}
+	}
+	
+	public void addAll(int index,CP2List list)
+	{
+		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
+	}
+    
+    /**
+     * A function that doubles the size of an array.
      * 
      */
     private void upsize()
@@ -224,8 +241,6 @@ public class ArrayList implements CP2List
 	// Unsupported Operations
 	public boolean equals(CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
-	public void addAll(CP2List list){throw new UnsupportedOperationException();}
-	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
 	public void removeRange(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	public CP2List subList(int fromIndex,int toIndex){throw new  UnsupportedOperationException();}
 	public int[] toArray(){throw new  UnsupportedOperationException();}

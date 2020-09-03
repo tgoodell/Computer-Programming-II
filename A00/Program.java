@@ -12,7 +12,14 @@ public class Program
         System.out.println(coolList);
         coolList.add(7, 7);
 		System.out.println(coolList);
-        
+		
+		System.out.println("---");
+		ArrayList list=new ArrayList();
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		coolList.addAll(list);
+        System.out.println(coolList);
         
     }
     
