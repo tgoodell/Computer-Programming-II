@@ -20,6 +20,7 @@ public class ArrayList implements CP2List
     
     
     //methods
+    
     /** 
      * A function to add a value to the end of an array.
      * 
