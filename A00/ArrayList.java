@@ -5,7 +5,7 @@ import java.util.*;
  */
 public class ArrayList implements CP2List
 {
-    //instance
+    //instance variables
     private int[] list;
     private int size;
     
@@ -16,8 +16,8 @@ public class ArrayList implements CP2List
         size=0;
     }
     
-    //methods
     
+    //methods
     /** 
      * A function to add a value to the end of an array.
      * 
@@ -221,6 +221,7 @@ public class ArrayList implements CP2List
 		return old;
 	}
 	
+	// Unsupported Operations
 	public boolean equals(CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
 	public void addAll(CP2List list){throw new UnsupportedOperationException();}

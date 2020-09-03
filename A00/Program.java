@@ -8,7 +8,7 @@ public class Program
         ArrayList coolList=new ArrayList();
         for(int i=3;i<30;i+=2) coolList.add(i);
         System.out.println(coolList);
-        coolList.delete(7);
+        coolList.remove(7);
         System.out.println(coolList);
         coolList.add(7, 7);
 		System.out.println(coolList);
