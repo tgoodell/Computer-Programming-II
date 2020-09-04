@@ -250,6 +250,11 @@ public class ArrayList implements CP2List
 		return old;
 	}
 	
+	public Stats getStats()
+	{
+		return new Stats(size,(System.nanoTime()-time)/1e9,compareCount,swapCount);
+	}
+	
 	// Unsupported Operations
 	public void addAll(int index,CP2List list){throw new  UnsupportedOperationException();}
 	public int lastIndexOf(int value){throw new  UnsupportedOperationException();}
