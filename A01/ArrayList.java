@@ -21,6 +21,16 @@ public class ArrayList implements CP2List
     
     //methods
     
+    
+    /**
+     * A method that shuffles the values in an array.
+     * 
+     */
+    public void shuffle()
+    {
+		
+	}
+    
     /** 
      * A function to add a value to the end of an array.
      * 
