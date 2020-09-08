@@ -17,18 +17,16 @@ public class ArrayList implements CP2List
     
     // pseudo code
     
-	// insertion sort
+	// selection sort
 	
 	/*
-	 i ← 1
-		while i < length(A)
-			j ← i
-			while j > 0 and A[j-1] > A[j]
-				swap A[j] and A[j-1]
-				j ← j - 1
-			end while
-			i ← i + 1
-		end while
+	 for(j=0;j<n-1;j++)
+		int iMin=j;
+		for(i=j+1;i<n;i++)
+			if(a[i]<a[iMin])
+				iMin=i;
+		if(iMin!=j)
+			swap(a[j],a[iMin]);
 	*/
 	
 	public void insertionSort()
