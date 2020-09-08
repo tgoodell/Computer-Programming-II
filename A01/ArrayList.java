@@ -10,8 +10,8 @@ public class ArrayList implements CP2List
     //instance variables
     private int[] list;
     private int size;
-    private int swapCount=0;
-    public long compareCount;
+    private int swapCount;
+    private int compareCount;
     public double time;
     private static Random r=new Random();
     
@@ -20,13 +20,27 @@ public class ArrayList implements CP2List
     {
         list=new int[10];
         size=0;
+        resetStats();
     }
     
     public ArrayList(int capacity)
     {
         list=new int[capacity];
         size=0;
+        resetStats();
     }
+    
+    public void resetStats()
+    {
+		compareCount=0;
+		swapCount=0;
+		time=System.nanoTime();
+	}
+	
+	public Stats getStats()
+	{
+		return new Stats(size,(System.nanoTime()-time)/1e9,compareCount,swapCount);
+	}
     
     public static ArrayList orderedList(int n)
     {
@@ -58,6 +72,20 @@ public class ArrayList implements CP2List
 			int randomIndex=r.nextInt(size);
 			swap(i,randomIndex);
 		}
+	}
+	
+	public boolean isSorted()
+	{
+		for (int i=0;i<size-1;i++)
+		{
+			if(list[i]>list[i+1]) return false;
+		}
+		return true;
+	}
+	
+	public void bogoSort()
+	{
+		while(!isSorted())shuffle();
 	}
 	
 	/**
@@ -301,11 +329,6 @@ public class ArrayList implements CP2List
 		int old=list[index];
 		list[index]=value;
 		return old;
-	}
-	
-	public Stats getStats()
-	{
-		return new Stats(size,(System.nanoTime()-time)/1e9,compareCount,swapCount);
 	}
 	
 	// Unsupported Operations
