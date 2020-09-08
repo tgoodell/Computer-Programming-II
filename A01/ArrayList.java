@@ -10,6 +10,9 @@ public class ArrayList implements CP2List
     //instance variables
     private int[] list;
     private int size;
+    private int swapCount=0;
+    public long compareCount;
+    public double time;
     
     //constructor
     public ArrayList()
@@ -17,6 +20,19 @@ public class ArrayList implements CP2List
         list=new int[10];
         size=0;
     }
+    
+    public ArrayList(int capacity)
+    {
+        list=new int[capacity];
+        size=0;
+    }
+    
+    public static ArrayList orderedList(int n)
+    {
+		ArrayList m=new ArrayList(n);
+		for(int i=0;i<n;i++)m.add(i);
+		return m;
+	}
     
     
     //methods
@@ -28,7 +44,27 @@ public class ArrayList implements CP2List
      */
     public void shuffle()
     {
-		
+		for (int i=0;i<size;i++)
+		{
+			// One method for random: int rando=(int)Math.random()*size;
+			Random r=new Random();
+			int randomIndex=r.nextInt(size);
+			swap(i,randomIndex);
+		}
+	}
+	
+	/**
+	 * A method that swaps two values in an array given two indexes.
+	 * 
+	 * @param index1 The first value's index to be swapped.
+	 * @param index2 The second value's index to be swapped.
+	 */
+	private void swap(int index1, int index2)
+	{
+		int temp=list[index1];
+		list[index1]=list[index2];
+		list[index2]=temp;
+		swapCount++;
 	}
     
     /** 
