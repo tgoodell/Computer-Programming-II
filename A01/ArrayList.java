@@ -1,7 +1,7 @@
 import java.util.*;
 
 /**
- * An arraylist.
+ * An arraylist with sorts.
  * 
  * @author Tristan Goodell
  */
@@ -13,6 +13,7 @@ public class ArrayList implements CP2List
     private int swapCount=0;
     public long compareCount;
     public double time;
+    private static Random r=new Random();
     
     //constructor
     public ArrayList()
@@ -34,6 +35,12 @@ public class ArrayList implements CP2List
 		return m;
 	}
     
+    public static ArrayList shuffledList(int n)
+    {
+		ArrayList m=orderedList(n);
+		m.shuffle();
+		return m;
+	}
     
     //methods
     
