@@ -6,8 +6,10 @@ public class Program
     {
         ArrayList coolList=ArrayList.shuffledList(10);
 		System.out.println(coolList);
-		coolList.insertionSort();
+		coolList.selectionSort();
 		System.out.println(coolList);
+		
+		System.out.println("\n---\n");
         System.out.println(Stats.getHeaders());
 		System.out.println(coolList.getStats());
     }

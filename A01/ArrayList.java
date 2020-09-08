@@ -17,6 +17,8 @@ public class ArrayList implements CP2List
     
     // pseudo code
     
+    // fourth sort method options: merge, radix, quick
+    
 	// selection sort
 	
 	/*
@@ -28,6 +30,82 @@ public class ArrayList implements CP2List
 		if(iMin!=j)
 			swap(a[j],a[iMin]);
 	*/
+	
+	public void heapSort()
+	{
+		heapify();
+		for(int i=0;i<size;i++)
+		{
+			swap(0,size-1-i);
+			siftDown(0,size-1-i);
+		}
+	}
+	
+	public void heapify()
+	{
+		int start=(size-1)/2;
+		while(start>=0) 
+		{
+			siftDown(start,size);
+			start--;
+		}	
+	}
+	
+	public boolean inOrder(int num1, int num2)
+	{
+		if(num1<num2)return false;
+		return true;
+	}
+	
+	private void siftDown(int start, int end)
+	{
+		int root=start;
+		int tempIndex=0;
+		int leftChildIndex=root*2+1;
+		int rightChildIndex=root*2+2;
+		while(root*2+1<end)
+		{
+			int temp=root;
+			if(!inOrder(leftChildIndex,temp))
+			{
+				tempIndex=leftChildIndex;
+			}
+			
+			if(rightChildIndex<end && !inOrder(leftChildIndex,temp))
+			{
+				tempIndex=rightChildIndex;
+			}
+			
+			if(root==tempIndex)return;
+			else
+			{
+				swap(root,tempIndex);
+				root=tempIndex;
+			}
+			
+			leftChildIndex=root*2+1;
+			rightChildIndex=root*2+2;
+		}
+	} 
+	
+	public void selectionSort()
+	{
+		for(int i=0;i<size-1;i++)
+		{
+			int minimum=i;
+			for(int x=i+1;x<size;x++)
+			{
+				if(list[x]<list[minimum])
+				{
+					minimum=x;
+				}
+			}
+			if(minimum!=i)
+			{
+				swap(list[i],list[minimum]);
+			}
+		}
+	}
 	
 	public void insertionSort()
 	{
