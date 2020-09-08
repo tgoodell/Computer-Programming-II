@@ -35,6 +35,20 @@ public class ArrayList implements CP2List
 		until not swapped
 	end procedure
 	*/
+	
+	public void bubbleSort()
+	{
+		while(!isSorted())
+		{
+			for (int i=0;i<size;i++) 
+			{
+				if(list[i-1]>list[i])
+				{
+					swap(list[i-1],list[i]);
+				}
+			}
+		}
+	}
     
     //constructor
     public ArrayList()
