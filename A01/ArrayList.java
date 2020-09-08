@@ -17,30 +17,40 @@ public class ArrayList implements CP2List
     
     // pseudo code
     
-    // bubble sort code
-    
-    /*
-    procedure bubbleSort(A : list of sortable items)
-		n := length(A)
-		repeat
-			swapped := false
-			for i := 1 to n-1 inclusive do
-				/if this pair is out of order/
-				if A[i-1] > A[i] then
-					/swap them and remember something changed/
-					swap(A[i-1], A[i])
-					swapped := true
-				end if
-			end for
-		until not swapped
-	end procedure
+	// insertion sort
+	
+	/*
+	 i ← 1
+		while i < length(A)
+			j ← i
+			while j > 0 and A[j-1] > A[j]
+				swap A[j] and A[j-1]
+				j ← j - 1
+			end while
+			i ← i + 1
+		end while
 	*/
+	
+	public void insertionSort()
+	{
+		for(int i=1;i<size-1;i++)
+		{
+			int j=i;
+			while(j>0 && list[j-1]>list[j])
+			{
+				swap(list[j],list[j-1]);
+				System.out.println("Step: " + toString());
+				j=j-1;
+			}
+			
+		}
+	}
 	
 	public void bubbleSort()
 	{
 		while(!isSorted())
 		{
-			for (int i=0;i<size;i++) 
+			for (int i=1;i<size-1;i++) 
 			{
 				if(list[i-1]>list[i])
 				{
