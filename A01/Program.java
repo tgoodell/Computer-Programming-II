@@ -6,7 +6,7 @@ public class Program
     {
         ArrayList coolList=ArrayList.shuffledList(10);
 		System.out.println(coolList);
-		coolList.selectionSort();
+		coolList.quickSort();
 		System.out.println(coolList);
 		
 		System.out.println("\n---\n");

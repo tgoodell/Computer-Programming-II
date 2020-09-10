@@ -12,6 +12,8 @@ public class ArrayList implements CP2List
     private int size;
     private int swapCount;
     private int compareCount;
+    private int low;
+    private int high;
     public double time;
     private static Random r=new Random();
     
@@ -30,6 +32,48 @@ public class ArrayList implements CP2List
 		if(iMin!=j)
 			swap(a[j],a[iMin]);
 	*/
+	
+	public void quickSort()
+	{
+		System.out.println(low);
+		System.out.println(high);
+		
+		while(!isSorted())
+		{
+			low=list[0];
+			high=list[size-1];
+			quickerSort(low,high);
+		}
+	}
+	
+	public void quickerSort(int low, int high)
+	{	
+		if(low<high)
+		{
+			int pivotLocale=partition(low,high);
+			quickerSort(low,pivotLocale);
+			quickerSort(pivotLocale+1,high);
+		}
+	}
+	
+	
+	private int partition(int low, int high)
+	{
+		int pivot=list[low];
+		int leftwall=low;
+		
+		for(int i=low;i<high;i++)
+		{
+			swap(list[i],list[leftwall]);
+			leftwall++;
+			System.out.println(toString());
+		}
+		
+		swap(pivot,list[leftwall]);
+		
+		return(leftwall);
+ 
+	}
 	
 	public void heapSort()
 	{
