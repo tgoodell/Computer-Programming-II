@@ -8,6 +8,7 @@ public class Program
 		System.out.println(coolList);
 		coolList.quickSort();
 		System.out.println(coolList);
+		coolList.resetStats();
 		
 		System.out.println("\n---\n");
         System.out.println(Stats.getHeaders());
