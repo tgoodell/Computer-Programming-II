@@ -22,6 +22,11 @@ class MyCustomPanel extends JPanel implements MouseMotionListener
 	int x=0;
 	int y=0;
 	
+	public static Color randomColor()
+	{
+		int r=(int)(Math.random()*2
+	}
+	
 	public void paint(Graphics g)
 	{
 		Graphics2D g2=(Graphics2D)g;
