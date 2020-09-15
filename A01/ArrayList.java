@@ -33,47 +33,44 @@ public class ArrayList implements CP2List
 			swap(a[j],a[iMin]);
 	*/
 	
-	public void quickSort()
+	public void quickSort() 
 	{
-		System.out.println(low);
-		System.out.println(high);
-		
-		while(!isSorted())
-		{
-			low=list[0];
-			high=list[size-1];
-			quickerSort(low,high);
+        partition(0,size-1);
+    }
+
+    private void partition(int low, int high) 
+    {
+        int pivot=list[low + (high-low)/2];
+        int lo=low;
+        int hi=high;
+
+        while(lo<=hi) 
+        {
+			if(!isSorted())
+			{
+				while (list[lo] < pivot) {
+					lo++;
+				}
+				
+				while (list[hi] > pivot) {
+					hi--;
+				}
+
+				if (lo <= hi) {
+					swap(lo,hi);
+					lo++;
+					hi--;
+				}
+				
+				if (low < hi) partition(low, hi);
+				if (lo < high) partition(lo, high);
+			}
+			else
+			{
+				break;
+			}
 		}
-	}
-	
-	public void quickerSort(int low, int high)
-	{	
-		if(low<high)
-		{
-			int pivotLocale=partition(low,high);
-			quickerSort(low,pivotLocale);
-			quickerSort(pivotLocale+1,high);
-		}
-	}
-	
-	
-	private int partition(int low, int high)
-	{
-		int pivot=list[low];
-		int leftwall=low;
-		
-		for(int i=low;i<high;i++)
-		{
-			swap(list[i],list[leftwall]);
-			leftwall++;
-			System.out.println(toString());
-		}
-		
-		swap(pivot,list[leftwall]);
-		
-		return(leftwall);
- 
-	}
+    }
 	
 	public void heapSort()
 	{
