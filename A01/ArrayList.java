@@ -14,63 +14,52 @@ public class ArrayList implements CP2List
     private int compareCount;
     private int low;
     private int high;
-    public double time;
+    public long time;
     private static Random r=new Random();
     
-    // pseudo code
-    
-    // fourth sort method options: merge, radix, quick
-    
-	// selection sort
-	
-	/*
-	 for(j=0;j<n-1;j++)
-		int iMin=j;
-		for(i=j+1;i<n;i++)
-			if(a[i]<a[iMin])
-				iMin=i;
-		if(iMin!=j)
-			swap(a[j],a[iMin]);
-	*/
-	
-	public void quickSort() 
-	{
-        partition(0,size-1);
-    }
-
-    private void partition(int low, int high) 
+    public void quickSort()
     {
-        int pivot=list[low + (high-low)/2];
-        int lo=low;
-        int hi=high;
-
-        while(lo<=hi) 
-        {
-			if(!isSorted())
-			{
-				while (list[lo] < pivot) {
-					lo++;
-				}
-				
-				while (list[hi] > pivot) {
-					hi--;
-				}
-
-				if (lo <= hi) {
-					swap(lo,hi);
-					lo++;
-					hi--;
-				}
-				
-				if (low < hi) partition(low, hi);
-				if (lo < high) partition(lo, high);
-			}
-			else
-			{
-				break;
-			}
+		quickerSort(0,size-1);
+	}
+	
+	public void quickerSort(int lo, int hi)
+	{
+		if(lo>=hi) 
+		{
+			return;
 		}
-    }
+		int pivot=partition(lo, hi);
+		quickerSort(lo, pivot);
+		quickerSort(pivot+1, hi);
+	}
+	
+	public int partition(int lo, int hi)
+	{
+		int pivot=get(lo);
+		int i=lo;
+		int j=hi;
+
+		while(true) 
+		{
+			while(get(i)<pivot)
+			{
+				i++;
+				compareCount++;
+			}
+			while(get(j)>pivot)
+			{
+				j--;
+				compareCount++;
+			}
+			if(i>=j)
+			{
+				compareCount++;
+				return j;
+			}
+
+			swap(i,j);
+		}
+	}
 	
 	public void heapSort()
 	{
@@ -90,12 +79,6 @@ public class ArrayList implements CP2List
 			siftDown(start,size);
 			start--;
 		}	
-	}
-	
-	public boolean inOrder(int num1, int num2)
-	{
-		if(num1<num2)return false;
-		return true;
 	}
 	
 	private void siftDown(int start, int end)
@@ -129,52 +112,52 @@ public class ArrayList implements CP2List
 		}
 	} 
 	
-	public void selectionSort()
-	{
-		for(int i=0;i<size-1;i++)
-		{
-			int minimum=i;
-			for(int x=i+1;x<size;x++)
-			{
-				if(list[x]<list[minimum])
-				{
-					minimum=x;
-				}
-			}
-			if(minimum!=i)
-			{
-				swap(list[i],list[minimum]);
-			}
-		}
+	 public void selectionSort()
+	 {  
+        for (int i=0;i<size-1;i++)  
+        {  
+            int minimum = i;
+            for (int x=i+1;x<size;x++)
+            {  
+                if (inOrder(get(x),get(minimum)))
+                {  
+                    minimum=x;
+                }  
+            }  
+            swap(minimum,i); 
+        }  
 	}
 	
 	public void insertionSort()
 	{
-		for(int i=1;i<size-1;i++)
+		for(int i=1;i<=size-1;i++)
 		{
 			int j=i;
-			while(j>0 && list[j-1]>list[j])
+			while(j>0 && inOrder(get(j-1),get(j)))
 			{
-				swap(list[j],list[j-1]);
-				System.out.println("Step: " + toString());
-				j=j-1;
+				swap(j,j-1);
+				j--;
 			}
 			
 		}
 	}
 	
 	public void bubbleSort()
+    {
+        for(int i=0;i<size;i++)
+        {  
+			for(int j=1;j<=size-1-i;j++)
+			{  
+				if(!inOrder(get(j),get(j-1)))swap(j-1,j);
+			}  
+		} 
+    }
+    
+    public boolean inOrder(int num1, int num2)
 	{
-		while(!isSorted())
-		{
-			for (int i=1;i<size-1;i++) 
-			{
-				if(list[i-1]>list[i])
-				{
-					swap(list[i-1],list[i]);
-				}
-			}
-		}
+		compareCount=compareCount+1;
+		if(num1<num2)return false;
+		return true;
 	}
     
     //constructor
@@ -240,7 +223,7 @@ public class ArrayList implements CP2List
 	{
 		for (int i=0;i<size-1;i++)
 		{
-			if(list[i]>list[i+1]) return false;
+			if(!inOrder(i,i+1)) return false;
 		}
 		return true;
 	}

@@ -4,14 +4,35 @@ public class Program
 {
     public static void main(String[] args)
     {
-        ArrayList coolList=ArrayList.shuffledList(100);
-		System.out.println(coolList);
-		coolList.quickSort();
-		System.out.println(coolList);
-		
-		System.out.println("\n---\n");
-        System.out.println(Stats.getHeaders());
-		System.out.println(coolList.getStats());
+		System.out.println(Stats.getHeaders());
+		int i=0;
+		/*
+		 * Quick Sort
+        while(true)
+        {
+            int n=(int)Math.pow(2,i);
+            ArrayList coolList=ArrayList.shuffledList(n);
+            coolList.resetStats();
+            coolList.quickSort();
+            Stats s=coolList.getStats();
+            if(s.time>60)break;
+            System.out.println(s);
+            i++;
+        }
+        */
+        
+	
+        while(true)
+        {
+            int n=(int)Math.pow(2,i);
+            ArrayList coolList=ArrayList.shuffledList(n);
+            coolList.resetStats();
+            coolList.quickSort();
+            Stats s=coolList.getStats();
+            if(s.time>60)break;
+            System.out.println(s);
+            i++;
+        }
     }
     
 

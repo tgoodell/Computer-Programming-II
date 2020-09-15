@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+
 public class Stats
 {
 	public double time;
