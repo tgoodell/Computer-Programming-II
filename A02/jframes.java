@@ -8,24 +8,29 @@ public class jframes extends JPanel
         JFrame frame= new JFrame("Welcome to this cool Windows!");
         MyCustomPanel panel=new MyCustomPanel();
         frame.getContentPane().add(new MyCustomPanel());
-        frame.addMouseMotionListener(panel);
+        panel.addMouseMotionListener(panel);
+        frame.addKeyListener(panel);
         frame.setSize(600,400);
         frame.setVisible(true);
+		
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // frame.setResizable(false);
     }
    
 }
 
-class MyCustomPanel extends JPanel implements MouseMotionListener
+class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 {
 	int x=0;
 	int y=0;
 	
 	public static Color randomColor()
-	{
-		int r=(int)(Math.random()*2
-	}
+    {
+        int r=(int)(Math.random()*256);
+        int g=(int)(Math.random()*256);
+        int b=(int)(Math.random()*256);
+        return new Color(r,g,b);
+    }
 	
 	public void paint(Graphics g)
 	{
@@ -36,9 +41,7 @@ class MyCustomPanel extends JPanel implements MouseMotionListener
 	}
 	
 	public void mouseDragged(MouseEvent e)
-	{
-		
-	}
+	{}
 	
 	public void mouseMoved(MouseEvent e)
 	{
@@ -46,4 +49,16 @@ class MyCustomPanel extends JPanel implements MouseMotionListener
 		y=e.getY();
 		repaint();
 	}
+	
+	public void keyReleased(KeyEvent e){}
+	public void keyPressed(KeyEvent e)
+	{
+		int keyCode=e.getKeyCode();
+		if(keyCode==KeyEvent.VK_LEFT)x-=10;
+		if(keyCode==KeyEvent.VK_RIGHT)x+=10;
+		if(keyCode==KeyEvent.VK_UP)y-=10;
+		if(keyCode==KeyEvent.VK_DOWN)y+=10;
+		repaint();
+	}
+	public void keyTyped(KeyEvent e){}
 }

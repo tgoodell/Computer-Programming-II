@@ -41,20 +41,40 @@ public class ArrayList implements CP2List
 
 		while(true) 
 		{
-			while(get(i)<pivot)
+			if(get(i)<pivot)
 			{
-				i++;
+				while(get(i)<pivot)
+				{
+					i++;
+					compareCount++;
+				}
+			}
+			else
+			{
 				compareCount++;
 			}
-			while(get(j)>pivot)
+			
+			if(get(j)>pivot)
 			{
-				j--;
+				while(get(j)>pivot)
+				{
+					j--;
+					compareCount++;
+				}
+			}
+			else
+			{
 				compareCount++;
 			}
+			
 			if(i>=j)
 			{
 				compareCount++;
 				return j;
+			}
+			else
+			{
+				compareCount++;
 			}
 
 			swap(i,j);
@@ -270,7 +290,7 @@ public class ArrayList implements CP2List
     {
 		if(index<0 || index>=size)throw new IndexOutOfBoundsException();
 		int i;
-		if (list.length==size-1) upsize();
+		if(size==list.length)upsize();
 		list[index]=value;
 		int j=index+1;
 		for (int k=j;k<size;k++) {
