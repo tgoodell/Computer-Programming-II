@@ -1,29 +1,130 @@
 import java.awt.*; 
-import java.awt.*;
 import java.awt.event.*; 
 import javax.swing.*; 
+import javax.swing.Timer;
 
-public class guigumdrops
+public class guigumdrops extends JPanel
 {
-    
-    
-    public static void main(String[] args){
-        JFrame frame= new JFrame("An Example");   
+	public static int winWidth=1920;
+	public static int winHeight=1080;
+	
+    public static void main(String[] args)
+    {
+        JFrame frame= new JFrame("Welecome to JavaTutorial.net");   
         MyCustomPanel panel=new MyCustomPanel(); 
-        frame.add(panel);
-        //frame.getContentPane().add(panel);
-        //panel.addMouseMotionListener(panel);
-        panel.setPreferredSize(new Dimension(600,400));
-        frame.pack();
+        frame.getContentPane().add(panel);
+        panel.addMouseMotionListener(panel);
+        frame.addKeyListener(panel);
+        frame.setSize(winWidth, winHeight);
+        frame.setFocusable(true);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);       
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
+        
+    }
+    
+    public int getWinWidth()
+    {
+        return winWidth;
+    }
+    
+    public int getWinHeight()
+    {
+        return winWidth;
     }
 }
 
-class MyCustomPanel extends JPanel implements MouseMotionListener
+class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 {
-    int x=0;
-    int y=0;
+    double x=100;
+    double y=100;
+    double vx=0;
+    double vy=0;
+    double gravity=0.8;
+    double drag=0.1;
+    
+    int winWidth=1920;
+    int winHeight=1080;
+    
+    Timer timer;
+    
+    MyCustomPanel()
+    {
+		setBackground(Color.BLACK);
+		refreshScreen();
+		System.out.println("hello");
+	}
+    
+    public void refreshScreen() 
+    {
+		timer = new Timer(0, new ActionListener() {
+		@Override
+			public void actionPerformed(ActionEvent e) {
+				if(y>winHeight-80)
+				{
+					y=winHeight-80;
+					vy=-.3*vy;
+				}
+				
+				if(y<0 && vy>0)
+				{
+					y=0;
+				}
+				
+				if(x>winWidth)
+				{
+					x=0;
+				}
+				
+				if(x<0)
+				{
+					x=winWidth;
+				}
+				
+				if(vy>5 || vy<-5)
+				{
+					vy=vy;
+				}
+				
+				
+				if(vx>0)
+				{
+					vx-=drag;
+				}
+				
+				if(vx<0)
+				{
+					vx+=drag;
+				}
+				
+				if(vx>5)
+				{
+					x+=5;
+					vx=5;
+				} else if(vx<-5)
+				{
+					x-=5;
+					vx=-5;
+				}
+					
+				else
+				{
+					x+=vx;
+				}
+				
+				vy-=gravity;
+				y-=vy;
+				
+				revalidate();
+				repaint();
+			}
+		});
+		
+		timer.setRepeats(true);
+		// Aprox. 60 FPS
+		timer.setDelay(17);
+		timer.start();
+	}
+    
     public static Color randomColor()
     {
         int r=(int)(Math.random()*256);
@@ -34,17 +135,58 @@ class MyCustomPanel extends JPanel implements MouseMotionListener
     
     public void paint(Graphics g){
         Graphics2D g2=(Graphics2D)g;
-        g2.setColor(randomColor());
+        g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(10));
-        g2.drawLine(x, y, 200, 300);            
+        g2.fillRect(0, 0, winWidth, winHeight); 
+        
+        g2.setColor(Color.BLACK);
+        g2.setStroke(new BasicStroke(10));
+        g2.fillRect(0, winHeight-40, winWidth, winHeight); 
+        
+        g2.setColor(Color.CYAN);
+        g2.setStroke(new BasicStroke(10));
+        
+        g2.fillRect((int)x, (int)y, 40, 40);     
     }
     
     public void mouseDragged(MouseEvent e){}
-    public void mouseMoved(MouseEvent e)
-    {
-        x=e.getX();
-        y=e.getY();
-        repaint();
-    }
+    public void mouseMoved(MouseEvent e){}
+    public void keyReleased(KeyEvent e){}
+    
+	public void keyPressed(KeyEvent e)
+	{
+		int keyCode=e.getKeyCode();
+		act(keyCode);
+	}
+	
+	public void act(int keyNum)
+	{
+		int keyCode=keyNum;
+		
+		if(keyCode==KeyEvent.VK_LEFT && keyCode==KeyEvent.VK_UP)
+		{
+			vx-=0.1;
+			y-=5*gravity;
+		} else if(keyCode==KeyEvent.VK_RIGHT && keyCode==KeyEvent.VK_UP)
+		{
+			vx+=0.1;
+			y-=5*gravity;
+		} else if(keyCode==KeyEvent.VK_LEFT)
+		{
+			vx-=0.1;
+		} else if(keyCode==KeyEvent.VK_RIGHT)
+		{
+			vx+=0.1;
+		} else if(keyCode==KeyEvent.VK_UP)
+		{
+			y-=5*gravity;
+		}
+		
+		//if(keyCode==KeyEvent.VK_DOWN)vy+=1;
+		
+		
+	}
+	
+	public void keyTyped(KeyEvent e){}
     
 }
