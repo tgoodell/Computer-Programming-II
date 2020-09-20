@@ -49,9 +49,8 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
     
     MyCustomPanel()
     {
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 		refreshScreen();
-		System.out.println("hello");
 	}
     
     public void refreshScreen() 
@@ -59,6 +58,8 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 		timer = new Timer(0, new ActionListener() {
 		@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				// Vertical Border Stops
 				if(y>winHeight-80)
 				{
 					y=winHeight-80;
@@ -70,6 +71,7 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					y=0;
 				}
 				
+				// Horizontal Border Pacman Transition
 				if(x>winWidth)
 				{
 					x=0;
@@ -80,12 +82,13 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					x=winWidth;
 				}
 				
+				// Terminal Velocity
 				if(vy>5 || vy<-5)
 				{
 					vy=vy;
 				}
 				
-				
+				// Horizontal Drag
 				if(vx>0)
 				{
 					vx-=drag;
@@ -96,6 +99,7 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					vx+=drag;
 				}
 				
+				// Horizontal Max Speed
 				if(vx>5)
 				{
 					x+=5;
@@ -105,7 +109,6 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					x-=5;
 					vx=-5;
 				}
-					
 				else
 				{
 					x+=vx;
@@ -140,27 +143,21 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
         g2.fillRect(0, 0, winWidth, winHeight); 
         
         g2.setColor(Color.BLACK);
+        super.paintComponent(g2);  
+        g2.drawString((int)x + ", " + (int)y, 20,20);
+        
         g2.setStroke(new BasicStroke(10));
         g2.fillRect(0, winHeight-40, winWidth, winHeight); 
         
         g2.setColor(Color.CYAN);
         g2.setStroke(new BasicStroke(10));
         
-        g2.fillRect((int)x, (int)y, 40, 40);     
+        g2.fillRect((int)x, (int)y, 40, 40);
+
     }
     
-    public void mouseDragged(MouseEvent e){}
-    public void mouseMoved(MouseEvent e){}
-    public void keyReleased(KeyEvent e){}
-    
-	public void keyPressed(KeyEvent e)
-	{
-		int keyCode=e.getKeyCode();
-		act(keyCode);
-	}
-	
-	public void act(int keyNum)
-	{
+    public void act(int keyNum)
+    {
 		int keyCode=keyNum;
 		
 		if(keyCode==KeyEvent.VK_LEFT && keyCode==KeyEvent.VK_UP)
@@ -181,12 +178,18 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 		{
 			y-=5*gravity;
 		}
-		
-		//if(keyCode==KeyEvent.VK_DOWN)vy+=1;
-		
-		
+	}
+    
+    public void keyReleased(KeyEvent e){}
+    
+	public void keyPressed(KeyEvent e)
+	{
+		int keyCode=e.getKeyCode();
+		act(keyCode);
 	}
 	
 	public void keyTyped(KeyEvent e){}
+	public void mouseDragged(MouseEvent e){}
+    public void mouseMoved(MouseEvent e){}
     
 }
