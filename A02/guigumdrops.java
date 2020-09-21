@@ -37,13 +37,17 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 {
     double x=100;
     double y=100;
+    double sx=x+20;
+    double sy=y+20;
     double vx=0;
     double vy=0;
     double gravity=0.8;
-    double drag=0.1;
+    double drag=0.2;
     
     int winWidth=1920;
     int winHeight=1080;
+    
+    boolean onGround=false;
     
     Timer timer;
     
@@ -63,7 +67,8 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 				if(y>winHeight-80)
 				{
 					y=winHeight-80;
-					vy=-.3*vy;
+					//vy=-.3*vy;
+					vy=0;
 				}
 				
 				if(y<0 && vy>0)
@@ -72,20 +77,21 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 				}
 				
 				// Horizontal Border Pacman Transition
-				if(x>winWidth)
+				if(x<0)
+				{
+					x=winWidth;
+				} else if(x>winWidth)
 				{
 					x=0;
 				}
 				
-				if(x<0)
-				{
-					x=winWidth;
-				}
-				
 				// Terminal Velocity
-				if(vy>5 || vy<-5)
+				if(vy>5)
 				{
-					vy=vy;
+					vy=0;
+				} else if(vy<-5)
+				{
+					vy=0;
 				}
 				
 				// Horizontal Drag
@@ -114,8 +120,17 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					x+=vx;
 				}
 				
-				vy-=gravity;
-				y-=vy;
+				addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						y-=2*gravity;
+					}
+				});
+				
+				vy+=gravity;
+				y+=vy;
+				sx=x+20;
+				sy=y+20;
 				
 				revalidate();
 				repaint();
@@ -144,7 +159,8 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
         
         g2.setColor(Color.BLACK);
         super.paintComponent(g2);  
-        g2.drawString((int)x + ", " + (int)y, 20,20);
+        g2.drawString((int)sx + ", " + (int)sy, 20,20);
+        g2.drawString(String.valueOf(onGround), 20,40);
         
         g2.setStroke(new BasicStroke(10));
         g2.fillRect(0, winHeight-40, winWidth, winHeight); 
@@ -159,24 +175,12 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
     public void act(int keyNum)
     {
 		int keyCode=keyNum;
-		
-		if(keyCode==KeyEvent.VK_LEFT && keyCode==KeyEvent.VK_UP)
-		{
-			vx-=0.1;
-			y-=5*gravity;
-		} else if(keyCode==KeyEvent.VK_RIGHT && keyCode==KeyEvent.VK_UP)
-		{
-			vx+=0.1;
-			y-=5*gravity;
-		} else if(keyCode==KeyEvent.VK_LEFT)
+		if(keyCode==KeyEvent.VK_LEFT)
 		{
 			vx-=0.1;
 		} else if(keyCode==KeyEvent.VK_RIGHT)
 		{
 			vx+=0.1;
-		} else if(keyCode==KeyEvent.VK_UP)
-		{
-			y-=5*gravity;
 		}
 	}
     
