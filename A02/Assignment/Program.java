@@ -20,8 +20,7 @@ public class Program extends JPanel
         frame.pack();
         frame.setFocusable(true);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
     }
 }
 
