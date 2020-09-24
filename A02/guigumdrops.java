@@ -5,8 +5,8 @@ import javax.swing.Timer;
 
 public class guigumdrops extends JPanel
 {
-	public static int winWidth=1920;
-	public static int winHeight=1000;
+	public static int winWidth=600;
+	public static int winHeight=400;
 	
     public static void main(String[] args)
     {
@@ -21,16 +21,6 @@ public class guigumdrops extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
         
     }
-    
-    public int getWinWidth()
-    {
-        return winWidth;
-    }
-    
-    public int getWinHeight()
-    {
-        return winWidth;
-    }
 }
 
 class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
@@ -41,18 +31,14 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
     double sy=y+20;
     double vx=0;
     double vy=0;
-    double gravity=0.8;
-    double drag=0.1;
+    double gravity=0.2;
+    double drag=0.3;
     boolean leftPressed=false;
     boolean rightPressed=false;
     boolean upPressed=false;
     
-    int winWidth=1920;
-    int winHeight=1000;
-    
-    int frameCount=0;
-    
-    boolean onGround=false;
+    int winWidth=600;
+    int winHeight=400;
     
     Timer timer;
     
@@ -70,20 +56,13 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 		@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				// Stop Jump Velocity
-				if(vy==-2*gravity)
-				{
-					vy=0;
-				}
-				
 				// Vertical Border Stops
 				if(y>winHeight-80)
 				{
 					y=winHeight-80;
-					vy=-0.99*vy;
-				}
-				
-				if(y<0)
+					//vy=-.3*vy;
+					vy=0;
+				} else if(y<0 && vy>0)
 				{
 					y=0;
 				}
@@ -106,58 +85,44 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 					//~ vy=0;
 				//~ }
 				
-				// Horizontal Max Speed
-				//~ if(vx>10)
-				//~ {
-					//~ x+=10;
-					//~ vx=10;
-				//~ } else if(vx<-10)
-				//~ {
-					//~ x-=10;
-					//~ vx=-10;
-				//~ }
-				//~ else
-				//~ {
-					//~ x+=vx;
-				//~ }
-				x+=vx;
-				
 				// Horizontal Drag
 				if(vx>0)
 				{
 					vx-=drag;
-				}
-				
-				if(vx<0)
+				} else if(vx<0)
 				{
 					vx+=drag;
 				}
 				
-				// First platform collison
-				
-				if(x>(winWidth/4) && x<(winWidth/4)+300 && y==winHeight-280)
+				// Horizontal Max Speed
+				if(vx>5)
 				{
-					y=winHeight-280;
-					vy=0;
+					x+=5;
+					vx=5;
+				} else if(vx<-5)
+				{
+					x-=5;
+					vx=-5;
+				}
+				else
+				{
+					x+=vx;
 				}
 				
-				if(leftPressed)vx-=0.5;
-				if(rightPressed)vx+=0.5;
+				addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						y-=2*gravity;
+					}
+				});
+				
+				if(leftPressed)vx-=1;
+				if(rightPressed)vx+=1;
 				if(upPressed)vy-=2*gravity;
 				
 				vy+=gravity;
 				y+=vy;
 				sx=x+20;
 				sy=y+20;
-				
-				//~ addMouseListener(new MouseAdapter() {
-					//~ @Override
-					//~ public void mouseClicked(MouseEvent e) {
-						//~ vy-=2*gravity;
-					//~ }
-				//~ });
-				
-				//frameCount++;
 				
 				revalidate();
 				repaint();
@@ -166,45 +131,33 @@ class MyCustomPanel extends JPanel implements MouseMotionListener, KeyListener
 		
 		timer.setRepeats(true);
 		// Aprox. 60 FPS
-		timer.setDelay(17);
+		timer.setDelay(1000/60);
 		timer.start();
 	}
     
-    public static Color randomColor()
-    {
-        int r=(int)(Math.random()*256);
-        int g=(int)(Math.random()*256);
-        int b=(int)(Math.random()*256);
-        return new Color(r,g,b);
-    }
-    
     public void paint(Graphics g){
         Graphics2D g2=(Graphics2D)g;
-        
-        g2.setColor(Color.WHITE);
-        g2.setStroke(new BasicStroke(10));
-        g2.fillRect(0, 0, winWidth, winHeight); 
+        //~ g2.setColor(Color.WHITE);
+        //~ g2.setStroke(new BasicStroke(10));
+        //~ g2.fillRect(0, 0, winWidth, winHeight); 
         
         g2.setColor(Color.BLACK);
         super.paintComponent(g2);  
         g2.drawString((int)sx + ", " + (int)sy, 20,20);
-        g2.drawString((int)vx + ", " + (int)vy, 20,40);
         
         g2.setStroke(new BasicStroke(10));
         g2.fillRect(0, winHeight-40, winWidth, winHeight); 
         
-        //mid platform
-        g2.fillRect(winWidth/4,winHeight-200,300,40); 
-        
         g2.setColor(Color.CYAN);
         g2.setStroke(new BasicStroke(10));
         
-        //g2.fillRect((int)(x+5*Math.sin(2*Math.PI*frameCount/15)), (int)(y+5*Math.sin(2*Math.PI*frameCount/11)), 40, 40);
-        g2.fillRect((int)x,(int)y,40,40);
+        g2.fillRect((int)x, (int)y, 40, 40);
         
-        g2.setColor(randomColor());
-        g2.setStroke(new BasicStroke(1));
-        g2.fillRect((int)sx,(int)sy,4,4);
+        g2.setColor(Color.RED);
+        if(upPressed)g2.fillRect((int)x+10, (int)y+40, 20, 10);
+        if(rightPressed)g2.fillRect((int)x-10, (int)y+10, 10, 20);
+        if(leftPressed)g2.fillRect((int)x+40, (int)y+10, 10, 20);
+
 
     }
     
