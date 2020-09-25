@@ -28,7 +28,7 @@ class Game extends JPanel implements MouseMotionListener, KeyListener, MouseWhee
 {
     double x=100;
     double y=100;
-    double sx=x+20;
+    double sx=x+20; 
     double sy=y+20;
     double vx=0;
     double vy=0;
