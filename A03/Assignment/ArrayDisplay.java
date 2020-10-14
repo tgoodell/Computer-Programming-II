@@ -12,7 +12,9 @@ public class ArrayDisplay extends JPanel
     Color tomato = new Color(255,99,71);
     int[] notes=new int[10000];
     int[] durations=new int[10000];
+    Thread one=new Thread();
     int dni=0;
+    int x=0;
     
     static
     {
@@ -50,13 +52,16 @@ public class ArrayDisplay extends JPanel
     
     public void drawRect(Graphics2D g2, int i, int n, double columnWidth, double unitHeight)
 	{
+				
 		if(coolList.swap1==i || coolList.swap2==i)
 		{
 			g2.setColor(tomato);
+			makeNoise();
 		}
 		else if(coolList.compare1==i || coolList.compare2==i)
 		{
 			g2.setColor(Color.CYAN);
+			makeNoise();
 		}
 		else g2.setColor(Color.WHITE);
 		
@@ -65,6 +70,7 @@ public class ArrayDisplay extends JPanel
 		int right=(int)((i+1)*columnWidth-2);
 		int tall=(int)(unitHeight*coolList.get(i)+1);
 		g2.draw(new RoundRectangle2D.Double(left+1,getHeight()-tall,right-left-2,tall+columnWidth, columnWidth/5, columnWidth/5));
+
 	}
 	
 	public void drawInfo(Graphics g2)
@@ -97,6 +103,53 @@ public class ArrayDisplay extends JPanel
             Thread.sleep(s);
         }
         catch(Exception e){}
+    }
+    
+    public void makeNoise()
+    {
+		one=new Thread() 
+		{
+			public void run()
+			{
+				try {
+					play(62,4);
+					wait(30);
+				} 
+				catch(Exception e)
+				{
+					System.out.println(e);
+				}
+			}
+		};
+		one.start();
+	}
+    
+    public static void play(int note, int duration)
+    {
+        try
+        {
+            Sequencer sequencer=MidiSystem.getSequencer();
+            sequencer.open();
+            Sequence sequence=new Sequence(Sequence.PPQ,4);
+            Track t=sequence.createTrack();
+            
+            int time=1;
+            if(note>0) t.add(new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON, 0, note, 127),time));
+            if(note>0) t.add(new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON, 0, note+7, 127),time));
+            t.add(new MidiEvent(new ShortMessage(ShortMessage.PROGRAM_CHANGE, 0, (int)(Math.random()*81+1),0),time));
+            time+=duration;
+            if(note>0) t.add(new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, 0, note, 127),time));
+            if(note>0) t.add(new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, 0, note+7, 127),time));
+            
+            sequencer.setTempoInBPM(130);
+            sequencer.setSequence(sequence);
+            sequencer.start();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return;
+        }
     }
     
 }
