@@ -13,16 +13,27 @@ public class Program
 		LinkedList list=new LinkedList();
 		list.add(1);
 		list.add(5);
+		list.add(7);
+		
+		LinkedList coolList=new LinkedList();
+		coolList.add(58);
+		coolList.add(32);
+		coolList.add(55);
+		
+		System.out.println(coolList);
+		
+		System.out.println(list);
 		
 		
-		
+		list.addAll(coolList);
+		System.out.println(list);
 	}
 }
 
 class LinkedList
 {
 	Node root=new Node(0);//pseudoroot
-	int size;
+	private int size;
 	Node last;
 	
 	public LinkedList()
@@ -39,6 +50,16 @@ class LinkedList
 		size++;
 	}
 	
+	public void addAll(LinkedList addList)
+	{		
+		for(int i=0;i<size;i++)
+		{
+			int v=addList.get(i);
+			System.out.println(v);
+			add(v);
+		}
+	}
+	
 	public int get(int index)
 	{
 		//if(index<0 || index>=size) throw 
@@ -53,6 +74,11 @@ class LinkedList
 		prev.next=prev.next.next;
 		size--;
 		return deletedValue;
+	}
+	
+	public int size()
+	{
+		return size;
 	}
 	
 	//make this have all the fancy stuff
