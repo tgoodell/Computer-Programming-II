@@ -11,21 +11,12 @@ public class Program
 		//System.out.println(a);
 		
 		LinkedList list=new LinkedList();
-		list.add(1);
-		list.add(5);
-		list.add(7);
+		LinkedList list2=new LinkedList();
 		
-		LinkedList coolList=new LinkedList();
-		coolList.add(58);
-		coolList.add(32);
-		coolList.add(55);
-		
-		System.out.println(coolList);
-		
+		for(int i=1;i<10;i++)list.add(i);
+		//for(int i=1;i<10;i=i+2)list2.add(i);
 		System.out.println(list);
-		
-		
-		list.addAll(coolList);
+		list.clear();
 		System.out.println(list);
 	}
 }
