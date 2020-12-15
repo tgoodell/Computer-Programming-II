@@ -18,46 +18,50 @@ public class Client extends JPanel
 
 class Logic extends JPanel
 { 
-	JPanel panel;
-	JButton sendMessage;
-    JTextField messageBox;
-    JTextArea chatBox;
-    JFrame newFrame=new JFrame("Chat");
+	public JPanel panel;
+	public JButton sendMessageButton;
+    public JTextArea messageTextBox;
+    public JTextArea chatBox;
+    public JFrame frame=new JFrame("Chat App");
     
-	int lastMsgID=0;
-	String author="tristan";
+	public String author="tristan";
+	public String messageText="";
 	Timer timer;
 	
-	public Logic()
-    {
-        JFrame frame= new JFrame("Chat App");   
+	Logic()
+    { 
         panel=new JPanel()
         {
             public void paint(Graphics g)
             {
                 draw((Graphics2D)g);
+                
             }
+            
+            
         }; 
-        frame.add(panel);
-        panel.setPreferredSize(new Dimension(1280, 800));
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+       int delay = 1000; //milliseconds
+      ActionListener taskPerformer = new ActionListener() {
+          public void actionPerformed(ActionEvent evt) {
+			  saveMessage();
+			  panel.revalidate();
+              panel.repaint();
+          }
+      };
+      
+      new Timer(delay, taskPerformer).start();
+      frame.add(panel);
+      panel.setPreferredSize(new Dimension(1280, 800));
+      frame.pack();
+      frame.setVisible(true);
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        
     }
     
-    public void refreshScreen() 
+    public void saveMessage()
     {
-		
-		timer = new Timer(0, new ActionListener() 
-		{
-		@Override
-			public void actionPerformed(ActionEvent e) 
-			{	
-				revalidate();
-				repaint();
-			}
-			
-		});
+		messageText=messageTextBox.getText();
+		System.out.println(messageText);
 	}
     
     public void draw(Graphics2D g)
@@ -69,25 +73,47 @@ class Logic extends JPanel
         //~ drawMessages(g);
         
         JPanel mainPanel = new JPanel();
+        JPanel southPanel = new JPanel();
+        southPanel.setLayout(new GridBagLayout());
+        
         mainPanel.setLayout(new BorderLayout());
 
-        JPanel southPanel = new JPanel();
-        southPanel.setBackground(Color.BLUE);
-        southPanel.setLayout(new GridBagLayout());
-
-        messageBox = new JTextField(30);
-        messageBox.requestFocusInWindow();
-        messageBox.setFont(new java.awt.Font("Arial", Font.ITALIC | Font.BOLD, 12));
-
-        sendMessage = new JButton("Send Message");
-        sendMessage.addActionListener(new sendMessageButtonListener());
-
-        chatBox = new JTextArea();
+        //~ JPanel southPanel = new JPanel();
+        //~ southPanel.setBackground(Color.BLUE);
+        //~ southPanel.setLayout(new GridBagLayout());
+        
+        sendMessageButton=new JButton("Send");
+        sendMessageButton.setBounds(50,50,95,30);
+        sendMessageButton.addActionListener(new sendMessageButtonListener());
+        
+        messageTextBox=new JTextArea();
+        messageTextBox.setBounds(50,100,150,20);
+        System.out.println(messageText);
+        
+        chatBox = new JTextArea(5,30);
         chatBox.setEditable(false);
         chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
         chatBox.setLineWrap(true);
+        
+        chatBox.append(getMsgs(0));
+        
+        //~ southPanel.add(messageTextBox);
+        //~ southPanel.add(sendMessageButton);
+ 
 
-        mainPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+        //~ messageBox = new JTextField(30);
+        //~ messageBox.requestFocusInWindow();
+        //~ messageBox.setFont(new java.awt.Font("Arial", Font.ITALIC | Font.BOLD, 12));
+
+        //~ sendMessage = new JButton("Send Message");
+        //~ sendMessage.addActionListener(new sendMessageButtonListener());
+
+        //~ chatBox = new JTextArea();
+        //~ chatBox.setEditable(false);
+        //~ chatBox.setFont(new Font("Serif", Font.PLAIN, 15));
+        //~ chatBox.setLineWrap(true);
+
+        //~ mainPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
 
         GridBagConstraints left = new GridBagConstraints();
         left.anchor = GridBagConstraints.LINE_START;
@@ -96,47 +122,41 @@ class Logic extends JPanel
         left.weighty = 1.0D;
 
         GridBagConstraints right = new GridBagConstraints();
-        //~ right.insets = new Insets(0, 10, 0, 0);
+        right.insets = new Insets(0, 10, 0, 0);
         right.anchor = GridBagConstraints.LINE_END;
         right.fill = GridBagConstraints.NONE;
         right.weightx = 1.0D;
         right.weighty = 1.0D;
 
-        southPanel.add(messageBox, left);
-        southPanel.add(sendMessage, right);
-
+        southPanel.add(messageTextBox, left);
+        southPanel.add(sendMessageButton, right);
+        
         mainPanel.add(BorderLayout.SOUTH, southPanel);
+        mainPanel.add(new JScrollPane(chatBox), BorderLayout.CENTER);
+        
 
-        newFrame.add(mainPanel);
-        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        newFrame.setSize(1280, 800);
-        newFrame.setVisible(true);
+        frame.add(mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1280, 800);
+        frame.setVisible(true);
         
     }
     
     class sendMessageButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-			if(messageBox.getText().length()<1)
-			{}
-			else 
-			{
-				sendMsg(author,messageBox.getText());
-				messageBox.setText("");
-			}
+			String content = messageTextBox.getText();
+			System.out.println(content);
+			revalidate();
+			repaint();
+			
+			sendMsg(author,content);
+			//~ System.out.println(messageTextBox.getText());
+			
+			//~ messageTextBox.setText("");
             
-            messageBox.requestFocusInWindow();
+            //~ messageTextBox.requestFocusInWindow();
         }
     }
-    
-    public static void drawMessages(Graphics2D g)
-    {
-		// fetch messages
-		// call function to add each message to array.
-		// call the last 100 msgs
-		
-		g.setColor(Color.WHITE);
-		g.drawString(getMsgs(0),20,80);
-	}
 	
     public static void sendMsg(String author, String msg)
     {
